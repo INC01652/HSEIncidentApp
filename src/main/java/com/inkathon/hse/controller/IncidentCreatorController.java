@@ -26,24 +26,24 @@ public class IncidentCreatorController {
 		return userService.getAllUsers();	
 	}
 	@GetMapping("/validate")
-	public String home(@RequestParam("username") String name, @RequestParam("password") String pass) {
+	public boolean home(@RequestParam("username") String name, @RequestParam("password") String pass) {
 		if (userService.validateUser(name, pass)){
-			return "Login Successful...";
+			return true;
 		}
 		else{
-			return "Login not successful..";
+			return false;
 		}
 	}
 	
 	@PostMapping("/validate")
-	public String save(@RequestBody IncidentCreatorDto creatorDto) {
+	public boolean save(@RequestBody IncidentCreatorDto creatorDto) {
 		String name = creatorDto.getName();
 		String pass = creatorDto.getPassword();
 		if (userService.validateUser(name, pass)){
-			return "Login Successful...";
+			return true;
 		}
 		else{
-			return "Login not successful..";
+			return false;
 		}
 	}	
 	
