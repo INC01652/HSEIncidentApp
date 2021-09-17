@@ -12,4 +12,9 @@ public interface IncidentInfoDao {
 	List<IncidentInfo> getAllIncidentInfo();
 	List<IncidentInfo> userIncident(String userId);
 	List<IncidentInfo> userIncidentPending(String userId);
+	List<IncidentInfo> managerIncident(String managerId);
+	List<IncidentInfo> managerIncidentPending(String managerId);
+
+
+	
 }

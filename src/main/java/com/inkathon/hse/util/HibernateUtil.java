@@ -11,6 +11,7 @@ import org.hibernate.service.ServiceRegistry;
 
 import com.inkathon.hse.entity.IncidentCreator;
 import com.inkathon.hse.entity.IncidentInfo;
+import com.inkathon.hse.entity.IncidentReviewer;
 
 
 public class HibernateUtil {
@@ -41,6 +42,9 @@ public class HibernateUtil {
 //                configuration.addPackage("com.inkathon.hse.entity");
                 configuration.addAnnotatedClass(IncidentInfo.class);
                 configuration.addAnnotatedClass(IncidentCreator.class);
+                configuration.addAnnotatedClass(IncidentReviewer.class);
+
+                
                 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();

@@ -106,5 +106,40 @@ public class IncidentInfoDaoImp implements IncidentInfoDao {
 		return null;
 	}
 	
+	public List<IncidentInfo> managerIncident(String managerId){
+		List<IncidentInfo> info = null;
+		try{
+		Session sessionFactory = HibernateUtil.getSessionFactory().openSession();
+		System.out.println(managerId);
+
+		info = sessionFactory.createQuery("FROM IncidentInfo WHERE manager_id = :id").setParameter("id", managerId).getResultList();
+		System.out.println("Hello");
+		return info;
+
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+		
+	}
+	
+	public List<IncidentInfo> managerIncidentPending(String managerId){
+		List<IncidentInfo> info = null;
+		try{
+		Session sessionFactory = HibernateUtil.getSessionFactory().openSession();
+
+		info = sessionFactory.createQuery("FROM IncidentInfo WHERE manager_id = :id AND status = 'pending'").setParameter("id", managerId).getResultList();
+	
+		System.out.println(info.toString());
+		return info;
+
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	
+	
+	
 	
 }

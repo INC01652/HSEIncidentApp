@@ -61,5 +61,13 @@ public class IncidentInfoServiceImp implements IncidentInfoService {
 		
 		return incidentInfoDao.userIncidentPending(userId);
 		}
-
+	public List<IncidentInfo> managerIncident(String managerId){
+		
+		return incidentInfoDao.managerIncident(managerId);
+	}
+	
+	public List<IncidentInfo> managerIncidentPending(String managerId){
+		
+		return incidentInfoDao.managerIncidentPending(managerId);
+		}
 }

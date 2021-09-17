@@ -61,6 +61,26 @@ public class IncidentInfoController {
 			return incidentInfo;
 		}
 		
+		//get incidents by manager_id to show on manager history page
+		@PostMapping("/managerIncidentInfo")
+		public List<IncidentInfo> managerIncidents(@RequestBody IncidentInfoDto infoDto) {
+			System.out.println(infoDto.getManager_id());
+			List<IncidentInfo> incidentInfo = incidentInfoService.managerIncident(infoDto.getManager_id());
+			return incidentInfo;
+		}
+		
+		
+		//get incidents by manager_id to show on manager home page
+		@PostMapping("/managerIncidentInfoPending")
+		public List<IncidentInfo> managerIncidentsPending(@RequestBody IncidentInfoDto infoDto) {
+			System.out.println(infoDto.getManager_id());
+			List<IncidentInfo> incidentInfo = incidentInfoService.managerIncidentPending(infoDto.getManager_id());
+			return incidentInfo;
+		}
+		
+		//Status update by manager
+		
+		
 		
 		
 	// get all incidents
@@ -70,5 +90,7 @@ public class IncidentInfoController {
 		Map map = new HashMap();
         map.put("Incidents", incidentInfos);
         return new ResponseEntity<Object>(map, HttpStatus.OK);
+        
+        
 	}
 }
