@@ -12,32 +12,50 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import com.inkathon.hse.entity.IncidentInfo;
+import com.inkathon.hse.dto.IncidentInfoDto;
+import com.inkathon.hse.entity.IncidentCreator;
 import com.inkathon.hse.util.HibernateUtil;
 
 @Repository
 public class IncidentInfoDaoImp implements IncidentInfoDao {
 
 	Transaction trans = null;
-
+	
 	public String save(IncidentInfo incidentInfo) {
+		IncidentCreator incidentCreator = null;
+		
 		Session sessionFactory = HibernateUtil.getSessionFactory().openSession();
 		trans = sessionFactory.beginTransaction();
+
+		
+//		adding manager_id using user_id(from Incident_Creator Table)
+		
+		if(incidentInfo.getUser_id() == null){
+			return "Provide user_id..."; 
+		}
+		incidentCreator= (IncidentCreator)sessionFactory.createQuery("FROM INCIDENT_CREATOR WHERE userId = :id",IncidentCreator.class).setParameter("id", incidentInfo.getUser_id()).uniqueResult();
+		if(incidentCreator == null){
+			return "Invalid user_id...";
+		}
+		incidentInfo.setManager_id(incidentCreator.getManager_id());
+		
 		sessionFactory.save(incidentInfo);
 		System.out.println(incidentInfo.toString());
 		trans.commit();
 
-		return incidentInfo.getIncident_id();
+		return "Incident id : " + incidentInfo.getIncident_id();
+		
 	}
 
 	public IncidentInfo get(String incident_id) {
-		IncidentInfo ic = null;
+		IncidentInfo info = null;
 		try{
 		Session sessionFactory = HibernateUtil.getSessionFactory().openSession();
 
-		ic = (IncidentInfo) sessionFactory.createQuery("FROM IncidentInfo WHERE incident_id = :id").setParameter("id", incident_id).uniqueResult();
+		info = (IncidentInfo) sessionFactory.createQuery("FROM IncidentInfo WHERE incident_id = :id").setParameter("id", incident_id).uniqueResult();
 	
-		System.out.println(ic.toString());
-		return ic;
+		System.out.println(info.toString());
+		return info;
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -57,4 +75,36 @@ public class IncidentInfoDaoImp implements IncidentInfoDao {
 
 	}
 
+	public List<IncidentInfo> userIncident(String userId){
+		List<IncidentInfo> info = null;
+		try{
+		Session sessionFactory = HibernateUtil.getSessionFactory().openSession();
+
+		info = sessionFactory.createQuery("FROM IncidentInfo WHERE user_id = :id AND status != 'pending'").setParameter("id", userId).getResultList();
+	
+		return info;
+
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	
+	public List<IncidentInfo> userIncidentPending(String userId){
+		List<IncidentInfo> info = null;
+		try{
+		Session sessionFactory = HibernateUtil.getSessionFactory().openSession();
+
+		info = sessionFactory.createQuery("FROM IncidentInfo WHERE user_id = :id AND status = 'pending'").setParameter("id", userId).getResultList();
+	
+		System.out.println(info.toString());
+		return info;
+
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	
+	
 }

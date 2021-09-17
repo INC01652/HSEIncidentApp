@@ -35,14 +35,16 @@ public class IncidentCreatorDao implements IncidentCreatorDaoInterface{
 			Session session = HibernateUtil.getSessionFactory().openSession();
 
 			// authenticate Incident Creator
+			System.out.println(username+" "+ password);
 			incidentCreator = (IncidentCreator) session
-					.createQuery("FROM INCIDENT_CREATOR IC WHERE IC.name = :username")
+					.createQuery("FROM INCIDENT_CREATOR IC WHERE IC.userId = :username")
 					.setParameter("username", username).uniqueResult();
 			if (incidentCreator != null && incidentCreator.getPassword().equals(password)) {
 				return true;
 			}
 
 		} catch (Exception e) {
+		System.out.println(e);
 		}
 
 		return false;

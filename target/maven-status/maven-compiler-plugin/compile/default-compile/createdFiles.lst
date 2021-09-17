@@ -5,6 +5,7 @@ com\inkathon\hse\service\IncidentCreatorService.class
 com\inkathon\hse\dto\IncidentInfoDto.class
 com\inkathon\hse\dto\IncidentCreatorDto.class
 com\inkathon\hse\service\IncidentInfoServiceImp.class
+com\inkathon\hse\entity\IncidentReviewer.class
 com\inkathon\hse\service\IncidentInfoService.class
 com\inkathon\hse\config\HseWebAppConfiguration.class
 com\inkathon\hse\dao\IncidentInfoDaoImp.class
@@ -15,3 +16,4 @@ com\inkathon\hse\entity\IncidentInfo.class
 com\inkathon\hse\controller\IncidentInfoController.class
 com\inkathon\hse\dao\IncidentInfoDao.class
 com\inkathon\hse\service\IncidentCreatorServiceImpl.class
+com\inkathon\hse\dto\IncidentReviewerDto.class

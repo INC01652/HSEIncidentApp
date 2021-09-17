@@ -25,6 +25,7 @@ public class IncidentCreatorController {
 	public List<IncidentCreator> allUsers() {
 		return userService.getAllUsers();	
 	}
+	
 	@GetMapping("/validate")
 	public boolean home(@RequestParam("username") String name, @RequestParam("password") String pass) {
 		if (userService.validateUser(name, pass)){
@@ -37,7 +38,7 @@ public class IncidentCreatorController {
 	
 	@PostMapping("/validate")
 	public boolean save(@RequestBody IncidentCreatorDto creatorDto) {
-		String name = creatorDto.getName();
+		String name = creatorDto.getUser_id();
 		String pass = creatorDto.getPassword();
 		if (userService.validateUser(name, pass)){
 			return true;

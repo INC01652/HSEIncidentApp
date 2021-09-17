@@ -1,8 +1,8 @@
 package com.inkathon.hse.dto;
 
 public class IncidentCreatorDto {
-		private int user_id;
-		private int manager_id;
+		private String user_id;
+		private String manager_id;
 		private String name;
 		private String password;
 		private String address;
@@ -16,7 +16,7 @@ public class IncidentCreatorDto {
 		}
 		
 		
-		public IncidentCreatorDto(int user_id, int manager_id, String name, String password, String address,
+		public IncidentCreatorDto(String user_id, String manager_id, String name, String password, String address,
 				int mobile_no) {
 			super();
 			this.user_id = user_id;
@@ -28,16 +28,16 @@ public class IncidentCreatorDto {
 		}
 
 
-		public int getUser_id() {
+		public String getUser_id() {
 			return user_id;
 		}
-		public void setUser_id(int user_id) {
+		public void setUser_id(String user_id) {
 			this.user_id = user_id;
 		}
-		public int getManager_id() {
+		public String getManager_id() {
 			return manager_id;
 		}
-		public void setManager_id(int manager_id) {
+		public void setManager_id(String manager_id) {
 			this.manager_id = manager_id;
 		}
 		public String getName() {

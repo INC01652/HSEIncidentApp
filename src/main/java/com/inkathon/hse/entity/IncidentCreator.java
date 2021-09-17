@@ -3,18 +3,15 @@ package com.inkathon.hse.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity(name = "INCIDENT_CREATOR")
 public class IncidentCreator {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="USER_ID")
-	private int user_id;
+	private String userId;
 	@Column(name="MANAGER_ID")
-	private int manager_id;
+	private String managerId;
 	@Column(name="NAME")
 	private String name;
 	@Column(name="PASSWORD")
@@ -22,7 +19,7 @@ public class IncidentCreator {
 	@Column(name="ADDRESS")
 	private String address;
 	@Column(name="MOBILE_No")
-	private int mobile_no;
+	private int mobileNo;
 	
 	
 	public IncidentCreator() {
@@ -31,34 +28,34 @@ public class IncidentCreator {
 	}
 
 
-	public IncidentCreator(int user_id, int manager_id, String name, String password, String address, int mobile_no) {
+	public IncidentCreator(String userId, String managerId, String name, String password, String address, int mobileNo) {
 		super();
-		this.user_id = user_id;
-		this.manager_id = manager_id;
+		this.userId = userId;
+		this.managerId = managerId;
 		this.name = name;
 		this.password = password;
 		this.address = address;
-		this.mobile_no = mobile_no;
+		this.mobileNo = mobileNo;
 	}
 
 
-	public int getUser_id() {
-		return user_id;
+	public String getUser_id() {
+		return userId;
 	}
 
 
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
+	public void setUser_id(String userId) {
+		this.userId = userId;
 	}
 
 
-	public int getManager_id() {
-		return manager_id;
+	public String getManager_id() {
+		return managerId;
 	}
 
 
-	public void setManager_id(int manager_id) {
-		this.manager_id = manager_id;
+	public void setManager_id(String managerId) {
+		this.managerId = managerId;
 	}
 
 
@@ -93,19 +90,19 @@ public class IncidentCreator {
 
 
 	public int getMobile_no() {
-		return mobile_no;
+		return mobileNo;
 	}
 
 
-	public void setMobile_no(int mobile_no) {
-		this.mobile_no = mobile_no;
+	public void setMobile_no(int mobileNo) {
+		this.mobileNo = mobileNo;
 	}
 
 
 	@Override
 	public String toString() {
-		return "IncidentCreator [user_id=" + user_id + ", manager_id=" + manager_id + ", name=" + name + ", password="
-				+ password + ", address=" + address + ", mobile_no=" + mobile_no + "]";
+		return "IncidentCreator [userId=" + userId + ", managerId=" + managerId + ", name=" + name + ", password="
+				+ password + ", address=" + address + ", mobileNo=" + mobileNo + "]";
 	}
 	
 	
