@@ -8,11 +8,12 @@ import com.inkathon.hse.entity.IncidentInfo;
 public interface IncidentInfoDao {
 	
 	public String save(IncidentInfo incidentInfo);
+	public IncidentInfo get(String incident_id);
 	List<IncidentInfo> getAllIncidentInfo();
 	List<IncidentInfo> userIncident(String userId);
 	List<IncidentInfo> managerIncident(String managerId);
-	void update(IncidentInfoDto infoDto);
-
+	String update(IncidentInfoDto infoDto);
+	String priority(IncidentInfoDto infoDto);
 
 	
 }

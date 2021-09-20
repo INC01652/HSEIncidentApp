@@ -3,19 +3,26 @@ package com.inkathon.hse.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
+import com.inkathon.hse.id.generator.StringPrefixedSequenceIdGenerator;
 import org.hibernate.annotations.GenericGenerator;
-
+import org.hibernate.annotations.Parameter;;
 
 @Entity
 @Table(name = "INCIDENT_INFO")
 public class IncidentInfo {
 	@Id
 	@Column(name="incident_id")
-	@GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID",strategy = "org.hibernate.id.UUIDGenerator")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "info_seq")
+    @GenericGenerator(
+        name = "info_seq", 
+        strategy = "com.inkathon.hse.id.generator.StringPrefixedSequenceIdGenerator", 
+        parameters = {
+            @Parameter(name = StringPrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
+            @Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "HSE-"),
+            @Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%03d") })
 	private String incident_id;
 	
 	@Column(name="user_id")
