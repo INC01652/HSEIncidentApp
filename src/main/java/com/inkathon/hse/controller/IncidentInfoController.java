@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -78,7 +79,12 @@ public class IncidentInfoController {
 			return incidentInfo;
 		}
 		
-		//Status update by manager
+		//update the status of an incident
+		 @PostMapping("/status/{id}")
+		   public ResponseEntity<?> update(@PathVariable("incident_id") String incident_id, @RequestBody IncidentInfoDto infoDto) {
+		      incidentInfoService.update(incident_id, infoDto);
+		      return ResponseEntity.ok().body("Book has been updated successfully.");
+		   }
 		
 		
 		

@@ -71,8 +71,8 @@ public class IncidentInfoServiceImp implements IncidentInfoService {
 		return incidentInfoDao.managerIncidentPending(managerId);
 		}
 
-	public void update(String incident_id, IncidentInfo incidentInfo) {
-		incidentInfoDao.update(incident_id, incidentInfo);
+	public void update(String incident_id, IncidentInfoDto infoDto) {
+		incidentInfoDao.update(incident_id, infoDto);
 		
 	}
 }
