@@ -41,8 +41,7 @@ public class IncidentInfoDaoImp implements IncidentInfoDao {
 			return "Invalid user_id...";
 		}
 		incidentInfo.setManager_id(incidentCreator.getManager_id());
-		// Date d = new Date();
-		String d = new SimpleDateFormat("yyyy/MM/	dd-HH:mm:ss").format(new Date());
+		String d = new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss").format(new Date());
 		incidentInfo.setDatetime(d);
 		sessionFactory.save(incidentInfo);
 		System.out.println(incidentInfo.toString());
@@ -52,6 +51,23 @@ public class IncidentInfoDaoImp implements IncidentInfoDao {
 
 	}
 
+	public IncidentInfo get(String incident_id) {
+		IncidentInfo info = new IncidentInfo();
+		try {
+			Session sessionFactory = HibernateUtil.getSessionFactory().openSession();
+			System.out.println(incident_id);
+			info = (IncidentInfo) sessionFactory.createQuery("FROM IncidentInfo WHERE incident_id = :id")
+					.setParameter("id", incident_id).uniqueResult();
+
+			System.out.println(info.toString());
+			return info;
+
+		} catch (Exception e) {
+			
+			System.out.println(e);
+		}
+		return null;
+	}	
 	
 	public List<IncidentInfo> getAllIncidentInfo() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -82,16 +98,15 @@ public class IncidentInfoDaoImp implements IncidentInfoDao {
 
 
 	public List<IncidentInfo> managerIncident(String managerId) {
-		List<IncidentInfo> info = null;
 		try {
 			Session sessionFactory = HibernateUtil.getSessionFactory().openSession();
-			System.out.println(managerId);
-
-			info = sessionFactory.createQuery("FROM IncidentInfo WHERE manager_id = :id").setParameter("id", managerId)
+			
+			List resultList = sessionFactory.createQuery("FROM IncidentInfo WHERE manager_id = :id").setParameter("id", managerId)
 					.getResultList();
-			System.out.println("Hello");
+			List<IncidentInfo> info = resultList;
+			
 			return info;
-
+			
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -99,21 +114,48 @@ public class IncidentInfoDaoImp implements IncidentInfoDao {
 
 	}
 
-	public void update(IncidentInfoDto infoDto) {
+	public String update(IncidentInfoDto infoDto) {
 		// TODO Auto-generated method stub
 		IncidentInfo incidentInfo = new IncidentInfo();
 
 		Session sessionFactory = HibernateUtil.getSessionFactory().openSession();
 		trans = sessionFactory.beginTransaction();
-		//		System.out.println(managerId);
-
+		
+		if(infoDto.getStatus()==null){
+			return "Incident type empty";
+		}
+		
 		incidentInfo = (IncidentInfo)sessionFactory.createQuery("FROM IncidentInfo WHERE incident_id = :id").setParameter("id", infoDto.getIncident_id()).uniqueResult();
 		incidentInfo.setStatus(infoDto.getStatus());
 		incidentInfo.setReason(infoDto.getReason());
 		
 		sessionFactory.update(incidentInfo);
-		
 		trans.commit();
+		
+		return "Status Updated Successfully";
 	}
+
+
+	public String priority(IncidentInfoDto infoDto) {
+		IncidentInfo incidentInfo = new IncidentInfo();
+
+		Session sessionFactory = HibernateUtil.getSessionFactory().openSession();
+		trans = sessionFactory.beginTransaction();
+		if(infoDto.getIncident_type()==null){
+			return "Incident type empty";
+		}
+		
+		incidentInfo = (IncidentInfo)sessionFactory.createQuery("FROM IncidentInfo WHERE incident_id = :id").setParameter("id", infoDto.getIncident_id()).uniqueResult();
+		incidentInfo.setIncident_type(infoDto.getIncident_type());
+		
+		sessionFactory.update(incidentInfo);
+		trans.commit();
+		
+		return "Priority Updated Successfully";
+		
+	}
+	
+	
+	
 
 }

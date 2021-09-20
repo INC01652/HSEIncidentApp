@@ -31,6 +31,15 @@ public class IncidentInfoController {
 	
 	ObjectMapper objectMapper = new ObjectMapper();
 		
+		
+		// get an incident by id
+		@GetMapping("/incidentInfo")
+		public IncidentInfo get(@RequestParam("incident_id") String incident_id) {
+			System.out.println(incident_id);
+			IncidentInfo incidentInfo = incidentInfoService.get(incident_id);
+			return incidentInfo;
+		}
+	
 		// add a new incident
 		@PostMapping("/incidentInfo")
 		public String save(@RequestBody IncidentInfoDto incidentInfo) {
@@ -59,11 +68,18 @@ public class IncidentInfoController {
 		
 		//update the status of an incident
 		 @PostMapping("/statusUpdate")
-		   public ResponseEntity<?> update(@RequestBody IncidentInfoDto infoDto) {
-		      incidentInfoService.update(infoDto);
-		      return ResponseEntity.ok().body("Updated successfully.");
+		   public String update(@RequestBody IncidentInfoDto infoDto) {
+		      return incidentInfoService.update(infoDto);
 		   }
 		
+
+		 //manager sets the priority of the incident		 
+		 @PostMapping("/priorityUpdate")
+		   public String priority(@RequestBody IncidentInfoDto infoDto) {
+		      return incidentInfoService.priority(infoDto);
+		   }
+		 
+		 
 		// get all incidents
 		@GetMapping(value = "/incidentInfos", produces = MediaType.APPLICATION_JSON_VALUE)
 		public ResponseEntity<Object> list() {

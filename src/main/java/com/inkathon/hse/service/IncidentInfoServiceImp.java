@@ -10,7 +10,6 @@ import com.inkathon.hse.dto.IncidentInfoDto;
 import com.inkathon.hse.entity.IncidentInfo;
 
 @Service
-@Transactional(readOnly=true)
 public class IncidentInfoServiceImp implements IncidentInfoService {
 
 	@Autowired
@@ -41,6 +40,10 @@ public class IncidentInfoServiceImp implements IncidentInfoService {
 		return incidentInfoDao.save(incidentInfo);
 	}
 
+	public IncidentInfo get(String incident_id) {
+		return incidentInfoDao.get(incident_id);
+	
+	}
 
 	public List<IncidentInfo> getAllIncidentInfo() {
 		return incidentInfoDao.getAllIncidentInfo();
@@ -55,8 +58,13 @@ public class IncidentInfoServiceImp implements IncidentInfoService {
 		return incidentInfoDao.managerIncident(managerId);
 	}
 	
-	public void update(IncidentInfoDto infoDto) {
-		incidentInfoDao.update(infoDto);
+	public String update(IncidentInfoDto infoDto) {
+		return incidentInfoDao.update(infoDto);
 		
 	}
+
+	public String priority(IncidentInfoDto infoDto) {
+		return incidentInfoDao.priority(infoDto);
+	}
+	
 }
