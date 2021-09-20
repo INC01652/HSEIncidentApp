@@ -138,6 +138,11 @@ public class IncidentInfoDaoImp implements IncidentInfoDao {
 		}
 		return null;
 	}
+
+	public void update(String incident_id, IncidentInfo incidentInfo) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 	

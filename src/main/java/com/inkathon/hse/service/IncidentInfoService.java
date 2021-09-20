@@ -14,6 +14,8 @@ public interface IncidentInfoService {
 	List<IncidentInfo> userIncidentPending(String userId);
 	List<IncidentInfo> managerIncident(String managerId);
 	List<IncidentInfo> managerIncidentPending(String managerId);
+	void update(String incident_id, IncidentInfo incidentInfo);
+
 
 
 	
