@@ -30,23 +30,16 @@ public class IncidentInfoController {
 
 	
 	ObjectMapper objectMapper = new ObjectMapper();
+		
+		// add a new incident
+		@PostMapping("/incidentInfo")
+		public String save(@RequestBody IncidentInfoDto incidentInfo) {
+			String incident_id = incidentInfoService.save(incidentInfo);
+			return incident_id;
+		}
+
 	
-	// add a new incident
-	@PostMapping("/incidentInfo")
-	public String save(@RequestBody IncidentInfoDto incidentInfo) {
-		String incident_id = incidentInfoService.save(incidentInfo);
-		return incident_id;
-	}
-
-	// get an incident by id
-	@GetMapping("/incidentInfo")
-	public IncidentInfo get(@RequestParam("incident_id") String incident_id) {
-		System.out.println(incident_id);
-		IncidentInfo incidentInfo = incidentInfoService.get(incident_id);
-		return incidentInfo;
-	}
-
-	// get incidents by user_id to show on user history page
+		// get incidents by user_id to show on user history page
 		@PostMapping("/userIncidentInfo")
 		public List<IncidentInfo> userIncidents(@RequestBody IncidentInfoDto infoDto) {
 			System.out.println(infoDto.getUser_id());
@@ -54,13 +47,6 @@ public class IncidentInfoController {
 			return incidentInfo;
 		}
 	
-		// get incidents by user_id to show on user home page
-		@PostMapping("/userIncidentInfoPending")
-		public List<IncidentInfo> userIncidentsPending(@RequestBody IncidentInfoDto infoDto) {
-			System.out.println(infoDto.getUser_id());
-			List<IncidentInfo> incidentInfo = incidentInfoService.userIncidentPending(infoDto.getUser_id());
-			return incidentInfo;
-		}
 		
 		//get incidents by manager_id to show on manager history page
 		@PostMapping("/managerIncidentInfo")
@@ -71,31 +57,20 @@ public class IncidentInfoController {
 		}
 		
 		
-		//get incidents by manager_id to show on manager home page
-		@PostMapping("/managerIncidentInfoPending")
-		public List<IncidentInfo> managerIncidentsPending(@RequestBody IncidentInfoDto infoDto) {
-			System.out.println(infoDto.getManager_id());
-			List<IncidentInfo> incidentInfo = incidentInfoService.managerIncidentPending(infoDto.getManager_id());
-			return incidentInfo;
-		}
-		
 		//update the status of an incident
-		 @PostMapping("/status/{id}")
-		   public ResponseEntity<?> update(@PathVariable("incident_id") String incident_id, @RequestBody IncidentInfoDto infoDto) {
-		      incidentInfoService.update(incident_id, infoDto);
-		      return ResponseEntity.ok().body("Book has been updated successfully.");
+		 @PostMapping("/statusUpdate")
+		   public ResponseEntity<?> update(@RequestBody IncidentInfoDto infoDto) {
+		      incidentInfoService.update(infoDto);
+		      return ResponseEntity.ok().body("Updated successfully.");
 		   }
 		
-		
-		
-		
-	// get all incidents
-	@GetMapping(value = "/incidentInfos",produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> list() {  
-		List<IncidentInfo> incidentInfos = incidentInfoService.getAllIncidentInfo();
-		Map map = new HashMap();
-        map.put("Incidents", incidentInfos);
-        return new ResponseEntity<Object>(map, HttpStatus.OK);
+		// get all incidents
+		@GetMapping(value = "/incidentInfos", produces = MediaType.APPLICATION_JSON_VALUE)
+		public ResponseEntity<Object> list() {
+			List<IncidentInfo> incidentInfos = incidentInfoService.getAllIncidentInfo();
+			Map map = new HashMap();
+	        map.put("Incidents", incidentInfos);
+	        return new ResponseEntity<Object>(map, HttpStatus.OK);
         
         
 	}

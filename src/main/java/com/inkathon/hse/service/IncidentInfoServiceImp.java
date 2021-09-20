@@ -36,18 +36,11 @@ public class IncidentInfoServiceImp implements IncidentInfoService {
 		incidentInfo.setLocation(infoDto.getLocation());
 		if(infoDto.getStatus()!= null)
 		incidentInfo.setStatus(infoDto.getStatus());
-		if(infoDto.getDatetime() != null)
-		incidentInfo.setDatetime(infoDto.getDatetime());
-		
 		
 		
 		return incidentInfoDao.save(incidentInfo);
 	}
 
-	public IncidentInfo get(String incident_id) {
-		return incidentInfoDao.get(incident_id);
-	
-	}
 
 	public List<IncidentInfo> getAllIncidentInfo() {
 		return incidentInfoDao.getAllIncidentInfo();
@@ -57,22 +50,13 @@ public class IncidentInfoServiceImp implements IncidentInfoService {
 		return incidentInfoDao.userIncident(userId);
 	}
 	
-	public List<IncidentInfo> userIncidentPending(String userId){
-		
-		return incidentInfoDao.userIncidentPending(userId);
-		}
 	public List<IncidentInfo> managerIncident(String managerId){
 		
 		return incidentInfoDao.managerIncident(managerId);
 	}
 	
-	public List<IncidentInfo> managerIncidentPending(String managerId){
-		
-		return incidentInfoDao.managerIncidentPending(managerId);
-		}
-
-	public void update(String incident_id, IncidentInfoDto infoDto) {
-		incidentInfoDao.update(incident_id, infoDto);
+	public void update(IncidentInfoDto infoDto) {
+		incidentInfoDao.update(infoDto);
 		
 	}
 }

@@ -39,15 +39,18 @@ public class IncidentInfo {
 	@Column(name="Datetime")
 	private String datetime;
 	
+	@Column(name="reason")
+	private String reason;
+	
 
 	public IncidentInfo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	
+
+
 	public IncidentInfo(String incident_id, String user_id, String manager_id, String incident_type, String location,
-			String description, String status, String datetime) {
+			String description, String status, String datetime, String reason) {
 		super();
 		this.incident_id = incident_id;
 		this.user_id = user_id;
@@ -57,6 +60,7 @@ public class IncidentInfo {
 		this.description = description;
 		this.status = status;
 		this.datetime = datetime;
+		this.reason = reason;
 	}
 
 
@@ -135,8 +139,18 @@ public class IncidentInfo {
 	}
 
 
-	public void setDatetime(String date) {
-		this.datetime = date;
+	public void setDatetime(String datetime) {
+		this.datetime = datetime;
+	}
+
+
+	public String getReason() {
+		return reason;
+	}
+
+
+	public void setReason(String reason) {
+		this.reason = reason;
 	}
 
 
@@ -144,7 +158,8 @@ public class IncidentInfo {
 	public String toString() {
 		return "IncidentInfo [incident_id=" + incident_id + ", user_id=" + user_id + ", manager_id=" + manager_id
 				+ ", incident_type=" + incident_type + ", location=" + location + ", description=" + description
-				+ ", status=" + status + ", datetime=" + datetime + "]";
+				+ ", status=" + status + ", datetime=" + datetime + ", reason=" + reason + "]";
 	}
-
+	
+	
 }

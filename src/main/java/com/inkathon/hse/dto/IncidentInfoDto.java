@@ -1,113 +1,121 @@
 package com.inkathon.hse.dto;
 
 public class IncidentInfoDto {
-		
-		private String incident_id;
-		
-		private String user_id;
-		
-		private String manager_id;
-		
-		private String incident_type;
-		
-		private String location;
-		
-		private String description;
-		
-		private String status;
-		
-		private String datetime;
 
-		public IncidentInfoDto() {
-			super();
-			// TODO Auto-generated constructor stub
-		}
+	private String incident_id;
 
-		
-		public IncidentInfoDto(String incident_id, String user_id, String manager_id, String incident_type,
-				String location, String description, String status, String datetime) {
-			super();
-			this.incident_id = incident_id;
-			this.user_id = user_id;
-			this.manager_id = manager_id;
-			this.incident_type = incident_type;
-			this.location = location;
-			this.description = description;
-			this.status = status;
-			this.datetime = datetime;
-		}
+	private String user_id;
 
+	private String manager_id;
 
-		public String getIncident_id() {
-			return incident_id;
-		}
+	private String incident_type;
 
-		public void setIncident_id(String incident_id) {
-			this.incident_id = incident_id;
-		}
+	private String location;
 
-		public String getUser_id() {
-			return user_id;
-		}
+	private String description;
 
-		public void setUser_id(String user_id) {
-			this.user_id = user_id;
-		}
+	private String status;
 
-		public String getManager_id() {
-			return manager_id;
-		}
+	private String datetime;
 
-		public void setManager_id(String manager_id) {
-			this.manager_id = manager_id;
-		}
+	private String reason;
 
-		public String getIncident_type() {
-			return incident_type;
-		}
+	public IncidentInfoDto() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
-		public void setIncident_type(String incident_type) {
-			this.incident_type = incident_type;
-		}
+	public IncidentInfoDto(String incident_id, String user_id, String manager_id, String incident_type, String location,
+			String description, String status, String datetime, String reason) {
+		super();
+		this.incident_id = incident_id;
+		this.user_id = user_id;
+		this.manager_id = manager_id;
+		this.incident_type = incident_type;
+		this.location = location;
+		this.description = description;
+		this.status = status;
+		this.datetime = datetime;
+		this.reason = reason;
+	}
 
-		public String getLocation() {
-			return location;
-		}
+	public String getIncident_id() {
+		return incident_id;
+	}
 
-		public void setLocation(String location) {
-			this.location = location;
-		}
+	public void setIncident_id(String incident_id) {
+		this.incident_id = incident_id;
+	}
 
-		public String getDescription() {
-			return description;
-		}
+	public String getUser_id() {
+		return user_id;
+	}
 
-		public void setDescription(String description) {
-			this.description = description;
-		}
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
 
-		public String getStatus() {
-			return status;
-		}
+	public String getManager_id() {
+		return manager_id;
+	}
 
-		public void setStatus(String status) {
-			this.status = status;
-		}
+	public void setManager_id(String manager_id) {
+		this.manager_id = manager_id;
+	}
 
-		public String getDatetime() {
-			return datetime;
-		}
+	public String getIncident_type() {
+		return incident_type;
+	}
 
-		public void setDatetime(String datetime) {
-			this.datetime = datetime;
-		}
+	public void setIncident_type(String incident_type) {
+		this.incident_type = incident_type;
+	}
 
-		@Override
-		public String toString() {
-			return "IncidentInfoDto [user_id=" + user_id + ", manager_id=" + manager_id + ", incident_type="
-					+ incident_type + ", location=" + location + ", description=" + description + ", status=" + status
-					+ ", datetime=" + datetime + "]";
-		}
-		
-		
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getDatetime() {
+		return datetime;
+	}
+
+	public void setDatetime(String datetime) {
+		this.datetime = datetime;
+	}
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
+	@Override
+	public String toString() {
+		return "IncidentInfo [incident_id=" + incident_id + ", user_id=" + user_id + ", manager_id=" + manager_id
+				+ ", incident_type=" + incident_type + ", location=" + location + ", description=" + description
+				+ ", status=" + status + ", datetime=" + datetime + ", reason=" + reason + "]";
+	}
+
 }
