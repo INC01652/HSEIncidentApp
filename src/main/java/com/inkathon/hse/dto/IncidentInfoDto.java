@@ -1,5 +1,7 @@
 package com.inkathon.hse.dto;
 
+import java.util.Arrays;
+
 public class IncidentInfoDto {
 
 	private String incident_id;
@@ -19,14 +21,23 @@ public class IncidentInfoDto {
 	private String datetime;
 
 	private String reason;
+	
+	private String fileType;
+	
+	private String fileName;
+
+	private String s;
+	
 
 	public IncidentInfoDto() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
+	
 	public IncidentInfoDto(String incident_id, String user_id, String manager_id, String incident_type, String location,
-			String description, String status, String datetime, String reason) {
+			String description, String status, String datetime, String reason, String fileType, String fileName,
+			String s) {
 		super();
 		this.incident_id = incident_id;
 		this.user_id = user_id;
@@ -37,7 +48,11 @@ public class IncidentInfoDto {
 		this.status = status;
 		this.datetime = datetime;
 		this.reason = reason;
+		this.fileType = fileType;
+		this.fileName = fileName;
+		this.s = s;
 	}
+
 
 	public String getIncident_id() {
 		return incident_id;
@@ -110,12 +125,40 @@ public class IncidentInfoDto {
 	public void setReason(String reason) {
 		this.reason = reason;
 	}
+	
+	
+	public String getS() {
+		return s;
+	}
 
+	public void setS(String s) {
+		this.s = s;
+	}
+
+	public String getFileType() {
+		return fileType;
+	}
+
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
+	}
+
+	
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	
 	@Override
 	public String toString() {
-		return "IncidentInfo [incident_id=" + incident_id + ", user_id=" + user_id + ", manager_id=" + manager_id
+		return "IncidentInfoDto [incident_id=" + incident_id + ", user_id=" + user_id + ", manager_id=" + manager_id
 				+ ", incident_type=" + incident_type + ", location=" + location + ", description=" + description
 				+ ", status=" + status + ", datetime=" + datetime + ", reason=" + reason + "]";
 	}
 
+	
 }

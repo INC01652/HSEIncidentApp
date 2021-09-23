@@ -1,5 +1,8 @@
 package com.inkathon.hse.entity;
 
+import java.sql.Blob;
+import java.util.Arrays;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import com.inkathon.hse.id.generator.StringPrefixedSequenceIdGenerator;
+
+
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;;
 
@@ -49,15 +54,23 @@ public class IncidentInfo {
 	@Column(name="reason")
 	private String reason;
 	
+	@Column(name="image")
+	private Blob image ;
+	
+	@Column(name="file_type")
+	private String fileType;
+	
+	@Column(name="file_name")
+	private String fileName;
 
 	public IncidentInfo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-
 	public IncidentInfo(String incident_id, String user_id, String manager_id, String incident_type, String location,
-			String description, String status, String datetime, String reason) {
+			String description, String status, String datetime, String reason, Blob image, String fileType,
+			String fileName) {
 		super();
 		this.incident_id = incident_id;
 		this.user_id = user_id;
@@ -68,8 +81,10 @@ public class IncidentInfo {
 		this.status = status;
 		this.datetime = datetime;
 		this.reason = reason;
+		this.image = image;
+		this.fileType = fileType;
+		this.fileName = fileName;
 	}
-
 
 	public String getIncident_id() {
 		return incident_id;
@@ -160,12 +175,38 @@ public class IncidentInfo {
 		this.reason = reason;
 	}
 
+	public Blob getImage() {
+		return image;
+	}
+
+
+	public void setImage(Blob image) {
+		this.image = image;
+	}
+
+
+	public String getFileType() {
+		return fileType;
+	}
+
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 
 	@Override
 	public String toString() {
 		return "IncidentInfo [incident_id=" + incident_id + ", user_id=" + user_id + ", manager_id=" + manager_id
 				+ ", incident_type=" + incident_type + ", location=" + location + ", description=" + description
-				+ ", status=" + status + ", datetime=" + datetime + ", reason=" + reason + "]";
+				+ ", status=" + status + ", datetime=" + datetime + ", reason=" + reason + ", image=" + image
+				+ ", fileType=" + fileType + ", fileName=" + fileName + "]";
 	}
 	
 	

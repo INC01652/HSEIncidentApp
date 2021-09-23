@@ -1,7 +1,11 @@
 package com.inkathon.hse.dao;
 
 import java.util.List;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -22,6 +26,7 @@ import com.inkathon.hse.util.HibernateUtil;
 public class IncidentInfoDaoImp implements IncidentInfoDao {
 
 	Transaction trans = null;
+	private ArrayList<IncidentInfoDto> infoDto;
 
 	public String save(IncidentInfo incidentInfo) {
 		IncidentCreator incidentCreator = null;
@@ -51,17 +56,59 @@ public class IncidentInfoDaoImp implements IncidentInfoDao {
 
 	}
 
-	public IncidentInfo get(String incident_id) {
+	public IncidentInfoDto get(String incident_id) {
 		IncidentInfo info = new IncidentInfo();
+		IncidentInfoDto dto = new IncidentInfoDto();
 		try {
 			Session sessionFactory = HibernateUtil.getSessionFactory().openSession();
-			System.out.println(incident_id);
+			
 			info = (IncidentInfo) sessionFactory.createQuery("FROM IncidentInfo WHERE incident_id = :id")
 					.setParameter("id", incident_id).uniqueResult();
 
-			System.out.println(info.toString());
-			return info;
-
+			
+			Blob bl = info.getImage();
+			byte[] b=null;
+			if(bl!=null){
+				try {
+					b = bl.getBytes(1,(int) bl.length());
+				}
+				catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				}
+			}
+			String s=null;
+			if(b!=null)
+			s = Base64.getEncoder().encodeToString(b);
+			
+			if(info.getIncident_id()!=null)
+			dto.setIncident_id(info.getIncident_id());
+			if(info.getUser_id()!=null)
+			dto.setUser_id(info.getUser_id());
+			if(info.getManager_id()!=null)
+			dto.setManager_id(info.getManager_id());
+			if(info.getIncident_type()!=null)
+			dto.setIncident_type(info.getIncident_type());
+			if(info.getDescription()!=null)
+			dto.setDescription(info.getDescription());
+			if(info.getLocation()!=null)
+			dto.setLocation(info.getLocation());
+			if(info.getReason()!=null)
+			dto.setReason(info.getReason());
+			if(info.getDatetime()!=null)
+			dto.setDatetime(info.getDatetime());
+			if(s!=null)
+			dto.setS(s);
+			if(info.getStatus()!=null)
+			dto.setStatus(info.getStatus());
+			if(info.getFileName()!=null)
+			dto.setFileName(info.getFileName());
+			if(info.getFileType()!=null)
+			dto.setFileType(info.getFileType());
+				
+			
+			return dto;
+			
 		} catch (Exception e) {
 			
 			System.out.println(e);
@@ -69,49 +116,153 @@ public class IncidentInfoDaoImp implements IncidentInfoDao {
 		return null;
 	}	
 	
-	public List<IncidentInfo> getAllIncidentInfo() {
+	public ArrayList<IncidentInfoDto> getAllIncidentInfo() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		CriteriaBuilder cb = session.getCriteriaBuilder();
-		CriteriaQuery<IncidentInfo> cq = cb.createQuery(IncidentInfo.class);
-		Root<IncidentInfo> root = cq.from(IncidentInfo.class);
-		cq.select(root);
-		Query<IncidentInfo> query = session.createQuery(cq);
-		return query.getResultList();
+		List<IncidentInfo> incidentInfo=null;
+		infoDto = new ArrayList<IncidentInfoDto>();
+		incidentInfo = session.createQuery("FROM IncidentInfo").getResultList();
+		IncidentInfo info = new IncidentInfo();
+		
+		for(int i=0;i<incidentInfo.size();i++){
+			IncidentInfoDto dto = new IncidentInfoDto();
+			info = incidentInfo.get(i);
+			Blob bl = info.getImage();
+			System.out.println(bl);
+			byte[] b= null;
+			if(bl!=null){
+				try {
+					b = bl.getBytes(1,(int) bl.length());
+				}
+				catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				}
+			}
+			String s=null;
+			if(b!=null)
+			s = Base64.getEncoder().encodeToString(b);
+			
+			if(info.getIncident_id()!=null)
+			dto.setIncident_id(info.getIncident_id());
+			if(info.getUser_id()!=null)
+			dto.setUser_id(info.getUser_id());
+			if(info.getManager_id()!=null)
+			dto.setManager_id(info.getManager_id());
+			if(info.getIncident_type()!=null)
+			dto.setIncident_type(info.getIncident_type());
+			if(info.getDescription()!=null)
+			dto.setDescription(info.getDescription());
+			if(info.getLocation()!=null)
+			dto.setLocation(info.getLocation());
+			if(info.getReason()!=null)
+			dto.setReason(info.getReason());
+//			System.out.println(s);
+			if(info.getDatetime()!=null)
+			dto.setDatetime(info.getDatetime());
+			if(s!=null)
+			dto.setS(s);
+			if(info.getStatus()!=null)
+			dto.setStatus(info.getStatus());
+			
+			infoDto.add(dto);
+		}
+			
+		return infoDto;
+		
 
 	}
 
-	public List<IncidentInfo> userIncident(String userId) {
-		List<IncidentInfo> info = null;
-		try {
-			Session sessionFactory = HibernateUtil.getSessionFactory().openSession();
-
-			info = sessionFactory.createQuery("FROM IncidentInfo WHERE user_id = :id").setParameter("id", userId)
-					.getResultList();
-
-			return info;
-
-		} catch (Exception e) {
-			System.out.println(e);
+	public List<IncidentInfoDto> userIncident(String userId) {
+		
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		List<IncidentInfo> incidentInfo = null;
+		infoDto = new ArrayList<IncidentInfoDto>();
+		
+		incidentInfo = session.createQuery("FROM IncidentInfo WHERE user_id = :id").setParameter("id", userId)
+				.getResultList();
+ 
+		IncidentInfo info = new IncidentInfo();
+		
+		for(int i=0;i<incidentInfo.size();i++){
+			
+			IncidentInfoDto dto = new IncidentInfoDto();
+			info = incidentInfo.get(i);
+			
+			if(info.getIncident_id()!=null)
+			dto.setIncident_id(info.getIncident_id());
+			if(info.getUser_id()!=null)
+			dto.setUser_id(info.getUser_id());
+			if(info.getManager_id()!=null)
+			dto.setManager_id(info.getManager_id());
+			if(info.getIncident_type()!=null)
+			dto.setIncident_type(info.getIncident_type());
+			if(info.getDescription()!=null)
+			dto.setDescription(info.getDescription());
+			if(info.getLocation()!=null)
+			dto.setLocation(info.getLocation());
+			if(info.getReason()!=null)
+			dto.setReason(info.getReason());
+//			System.out.println(s);
+			if(info.getStatus()!=null)
+			dto.setStatus(info.getStatus());
+			if(info.getDatetime()!=null)
+			dto.setDatetime(info.getDatetime());
+			if(info.getFileName()!=null)
+			dto.setFileName(info.getFileName());
+			if(info.getFileType()!=null)
+			dto.setFileType(info.getFileType());
+			
+			infoDto.add(dto);
 		}
-		return null;
+			
+		return infoDto;
+
 	}
 
 
-	public List<IncidentInfo> managerIncident(String managerId) {
-		try {
-			Session sessionFactory = HibernateUtil.getSessionFactory().openSession();
-			
-			List resultList = sessionFactory.createQuery("FROM IncidentInfo WHERE manager_id = :id").setParameter("id", managerId)
-					.getResultList();
-			List<IncidentInfo> info = resultList;
-			
-			return info;
-			
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return null;
+	public List<IncidentInfoDto> managerIncident(String managerId) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		List<IncidentInfo> incidentInfo = null;
+		infoDto = new ArrayList<IncidentInfoDto>();
+		
+		incidentInfo = session.createQuery("FROM IncidentInfo WHERE manager_id = :id").setParameter("id", managerId)
+				.getResultList();
 
+		IncidentInfo info = new IncidentInfo();
+		
+		for(int i=0;i<incidentInfo.size();i++){
+			
+			IncidentInfoDto dto = new IncidentInfoDto();
+			info = incidentInfo.get(i);
+			
+			if(info.getIncident_id()!=null)
+			dto.setIncident_id(info.getIncident_id());
+			if(info.getUser_id()!=null)
+			dto.setUser_id(info.getUser_id());
+			if(info.getManager_id()!=null)
+			dto.setManager_id(info.getManager_id());
+			if(info.getIncident_type()!=null)
+			dto.setIncident_type(info.getIncident_type());
+			if(info.getDescription()!=null)
+			dto.setDescription(info.getDescription());
+			if(info.getLocation()!=null)
+			dto.setLocation(info.getLocation());
+			if(info.getReason()!=null)
+			dto.setReason(info.getReason());
+//			System.out.println(s);
+			if(info.getStatus()!=null)
+			dto.setStatus(info.getStatus());
+			if(info.getDatetime()!=null)
+			dto.setDatetime(info.getDatetime());
+			if(info.getFileName()!=null)
+			dto.setFileName(info.getFileName());
+			if(info.getFileType()!=null)
+			dto.setFileType(info.getFileType());
+						
+			infoDto.add(dto);
+		}
+			
+		return infoDto;
 	}
 
 	public String update(IncidentInfoDto infoDto) {
@@ -154,8 +305,5 @@ public class IncidentInfoDaoImp implements IncidentInfoDao {
 		return "Priority Updated Successfully";
 		
 	}
-	
-	
-	
 
 }
