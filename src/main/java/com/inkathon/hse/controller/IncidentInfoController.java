@@ -1,5 +1,6 @@
 package com.inkathon.hse.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,9 +35,9 @@ public class IncidentInfoController {
 		
 		// get an incident by id
 		@GetMapping("/incidentInfo")
-		public IncidentInfo get(@RequestParam("incident_id") String incident_id) {
+		public IncidentInfoDto get(@RequestParam("incident_id") String incident_id) {
 			System.out.println(incident_id);
-			IncidentInfo incidentInfo = incidentInfoService.get(incident_id);
+			IncidentInfoDto incidentInfo = incidentInfoService.get(incident_id);
 			return incidentInfo;
 		}
 	
@@ -50,18 +51,18 @@ public class IncidentInfoController {
 	
 		// get incidents by user_id to show on user history page
 		@PostMapping("/userIncidentInfo")
-		public List<IncidentInfo> userIncidents(@RequestBody IncidentInfoDto infoDto) {
+		public List<IncidentInfoDto> userIncidents(@RequestBody IncidentInfoDto infoDto) {
 			System.out.println(infoDto.getUser_id());
-			List<IncidentInfo> incidentInfo = incidentInfoService.userIncident(infoDto.getUser_id());
+			List<IncidentInfoDto> incidentInfo = incidentInfoService.userIncident(infoDto.getUser_id());
 			return incidentInfo;
 		}
 	
 		
 		//get incidents by manager_id to show on manager history page
 		@PostMapping("/managerIncidentInfo")
-		public List<IncidentInfo> managerIncidents(@RequestBody IncidentInfoDto infoDto) {
+		public List<IncidentInfoDto> managerIncidents(@RequestBody IncidentInfoDto infoDto) {
 			System.out.println(infoDto.getManager_id());
-			List<IncidentInfo> incidentInfo = incidentInfoService.managerIncident(infoDto.getManager_id());
+			List<IncidentInfoDto> incidentInfo = incidentInfoService.managerIncident(infoDto.getManager_id());
 			return incidentInfo;
 		}
 		
@@ -83,11 +84,10 @@ public class IncidentInfoController {
 		// get all incidents
 		@GetMapping(value = "/incidentInfos", produces = MediaType.APPLICATION_JSON_VALUE)
 		public ResponseEntity<Object> list() {
-			List<IncidentInfo> incidentInfos = incidentInfoService.getAllIncidentInfo();
+			ArrayList<IncidentInfoDto> incidentInfos = incidentInfoService.getAllIncidentInfo();
 			Map map = new HashMap();
 	        map.put("Incidents", incidentInfos);
 	        return new ResponseEntity<Object>(map, HttpStatus.OK);
-        
         
 	}
 }
