@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.inkathon.hse.dao.IncidentInfoDao;
 import com.inkathon.hse.dto.IncidentInfoDto;
 import com.inkathon.hse.entity.IncidentInfo;
+import com.inkathon.hse.objects.IncidentTypes;
 import com.sap.db.jdbcext.wrapper.Blob;
 
 @Service
@@ -88,5 +89,12 @@ public class IncidentInfoServiceImp implements IncidentInfoService {
 	public String priority(IncidentInfoDto infoDto) {
 		return incidentInfoDao.priority(infoDto);
 	}
+
+	public IncidentTypes incidentTypesCount(String managerId) {
+		// TODO Auto-generated method stub
+		return incidentInfoDao.incidentCount(managerId);
+	}
+	
+	
 	
 }

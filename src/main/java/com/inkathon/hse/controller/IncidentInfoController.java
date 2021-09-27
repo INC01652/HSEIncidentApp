@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.inkathon.hse.dto.IncidentInfoDto;
 import com.inkathon.hse.entity.IncidentInfo;
+import com.inkathon.hse.objects.IncidentTypes;
 import com.inkathon.hse.service.IncidentInfoService;
 
 @RestController
@@ -28,7 +29,6 @@ public class IncidentInfoController {
 
 	@Autowired
 	private IncidentInfoService incidentInfoService;
-
 	
 	ObjectMapper objectMapper = new ObjectMapper();
 		
@@ -74,10 +74,17 @@ public class IncidentInfoController {
 		   }
 		
 
-		 //manager sets the priority of the incident		 
-		 @PostMapping("/priorityUpdate")
+		//manager sets the priority of the incident		 
+		@PostMapping("/priorityUpdate")
 		   public String priority(@RequestBody IncidentInfoDto infoDto) {
 		      return incidentInfoService.priority(infoDto);
+		   }
+ 
+		 
+		//Get all incident types for report
+		 @PostMapping("/incidentTypesCount")
+		   public IncidentTypes incidentTypesCount(@RequestBody IncidentInfoDto infoDto) {
+		      return incidentInfoService.incidentTypesCount(infoDto.getManager_id());
 		   }
 		 
 		 
