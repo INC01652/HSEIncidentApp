@@ -18,6 +18,7 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import com.inkathon.hse.entity.IncidentInfo;
+import com.inkathon.hse.objects.IncidentTypes;
 import com.inkathon.hse.dto.IncidentInfoDto;
 import com.inkathon.hse.entity.IncidentCreator;
 import com.inkathon.hse.util.HibernateUtil;
@@ -305,5 +306,40 @@ public class IncidentInfoDaoImp implements IncidentInfoDao {
 		return "Priority Updated Successfully";
 		
 	}
+
+	public IncidentTypes incidentCount(String managerId) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		IncidentTypes count = new IncidentTypes();
+		
+		List<IncidentInfo> info = session.createQuery("FROM IncidentInfo WHERE manager_id = :id").setParameter("id", managerId).getResultList();
+		count.setFatal(info.size());
+		
+		int f=0,h=0,l=0,m=0,s=0;
+		
+		for(int i=0;i<info.size();i++){
+			if(info.get(i).getIncident_type().equals("Fatal"))
+				f+=1;
+			if(info.get(i).getIncident_type().equals("Hazard"))
+				h+=1;
+			if(info.get(i).getIncident_type().equals("Very low"))
+				l+=1;
+			if(info.get(i).getIncident_type().equals("Minor"))
+				m+=1;
+			if(info.get(i).getIncident_type().equals("Serious"))
+				s+=1;
+			
+		}
+		
+		count.setFatal(f);
+		count.setHazard(h);
+		count.setMinor(m);
+		count.setVeryLow(l);
+		count.setSerious(s);
+		
+		return count;
+	}
+	
+	
+	
 
 }
